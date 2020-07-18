@@ -31,20 +31,14 @@ function App() {
   }
 
   function closeAllPopups(evt) {
+    //document.getElementById(`popup__${popupSelector}`).classList.remove('popup_opened');
     evt.target.closest('.popup').classList.remove('popup_opened');
+    //document.querySelectorAll('.popup').classList.remove('popup_opened');
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsImagePopupOpen(false);
     setSelectedCard({});
-  }
-
-  function escClosePopup(evt) {
-    console.log('123');
-    if (evt.key === 'Escape') {
-      evt.target.closest('.popup').classList.remove('popup_opened');
-      console.log('321');
-    }
   }
 
   return (
@@ -62,7 +56,6 @@ function App() {
         <PopupWithForm
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-          onEsc={escClosePopup}
           name="profile"
           title="Редактировать профиль"
           button="Сохранить"
