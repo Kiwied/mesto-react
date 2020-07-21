@@ -30,10 +30,7 @@ function App() {
     setSelectedCard(card);
   }
 
-  function closeAllPopups(evt) {
-    //document.getElementById(`popup__${popupSelector}`).classList.remove('popup_opened');
-    evt.target.closest('.popup').classList.remove('popup_opened');
-    //document.querySelectorAll('.popup').classList.remove('popup_opened');
+  function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
