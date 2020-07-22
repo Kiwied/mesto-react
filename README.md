@@ -38,4 +38,4 @@
 
 * использование React
 
-**[Ссылка на GitHub Pages](https://kiwied.github.io/mesto/ "Mesto")**
+**[Ссылка на GitHub Pages](https://kiwied.github.io/mesto-react/ "Mesto")**
