@@ -46,7 +46,7 @@ export default function EditProfilePopup(props) {
             id="name-input"
             name="name"
             placeholder="Имя"
-            value={name}
+            value={name || ''}
             onChange={handleNameChange}
             className="form__input form__input_name"
             minLength="2" maxLength="40"
@@ -61,7 +61,7 @@ export default function EditProfilePopup(props) {
             id="description-input"
             name="about"
             placeholder="Описание"
-            value={description}
+            value={description || ''}
             onChange={handleDescriptionChange}
             className="form__input form__input_description"
             minLength="2" maxLength="200"
