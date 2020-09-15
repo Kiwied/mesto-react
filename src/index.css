@@ -13,3 +13,5 @@
 @import url(./blocks/form/form.css);
 @import url(./blocks/form/_delete/form_delete.css);
 @import url(./blocks/form/_avatar/form_avatar.css);
+@import url(blocks/auth/auth.css);
+@import url(blocks/auth-form/auth-form.css);

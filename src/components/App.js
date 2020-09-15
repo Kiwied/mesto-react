@@ -1,8 +1,9 @@
 import React from 'react';
 import '../index.css';
-import Header from "./header";
+import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
+import Login from "./Login";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
@@ -10,6 +11,9 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import AddPlacePopup from "./AddPlacePopup";
+import { Route, Switch, withRouter } from 'react-router-dom';
+import ProtectedRoute from "./ProtectedRoute";
+import Register from "./Register";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -18,6 +22,7 @@ function App() {
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
   const [currentUser, setCurrentUser] = React.useState({});
+  const [loggedIn, setLoggedIn] = React.useState(true);
 
   React.useEffect(() => {
     api.getUserInfo()
@@ -131,15 +136,29 @@ function App() {
       <div className="page">
         <div className="content">
           <Header/>
-          <Main
-            onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick}
-            onCardClick={handleCardClick}
-            cards={cards}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
-          />
+
+          <Switch>
+            <Route path="/sign-up">
+              <Register/>
+            </Route>
+
+            <Route path="/sign-in">
+              <Login/>
+            </Route>
+
+            <ProtectedRoute exact path="/"
+                            loggedIn={loggedIn}
+                            component={Main}
+                            onEditProfile={handleEditProfileClick}
+                            onAddPlace={handleAddPlaceClick}
+                            onEditAvatar={handleEditAvatarClick}
+                            onCardClick={handleCardClick}
+                            cards={cards}
+                            onCardLike={handleCardLike}
+                            onCardDelete={handleCardDelete}
+            />
+          </Switch>
+
           <Footer/>
 
           <EditProfilePopup
@@ -177,4 +196,4 @@ function App() {
   );
 }
 
-export default App;
+export default withRouter(App);

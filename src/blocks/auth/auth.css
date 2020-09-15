@@ -1,0 +1,8 @@
+@import url(__not-registered/auth__not-registered.css);
+
+.auth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60px;
+}
