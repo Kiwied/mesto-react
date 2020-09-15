@@ -1,6 +1,24 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 export default function Register() {
+  const [opacity, setOpacity] = React.useState(1);
+
+  const linkStyle = {
+    color: 'white',
+    textDecoration: 'none',
+    transition: 'opacity .15s linear',
+    opacity: opacity
+  }
+
+  function handleMouseEnter() {
+    setOpacity(0.6);
+  }
+
+  function handleMouseLeave() {
+    setOpacity(1);
+  }
+
   return (
     <main>
       <section className="auth">
@@ -27,7 +45,12 @@ export default function Register() {
         </form>
 
         <p className="auth__redirect">
-          Уже зарегистрированы? Войти
+          Уже зарегистрированы? {<Link to="/sign-in"
+                                       style={linkStyle}
+                                       onMouseEnter={handleMouseEnter}
+                                       onMouseLeave={handleMouseLeave}>
+          Войти
+        </Link>}
         </p>
       </section>
     </main>

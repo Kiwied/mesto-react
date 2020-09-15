@@ -38,3 +38,7 @@
 .popup_opened .form:not(:hover) .popup__close {
   opacity: .6;
 }
+
+.popup__opened .infoTooltip:not(:hover) .popup__close {
+  opacity: .6;
+}
