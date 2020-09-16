@@ -5,5 +5,3 @@ export const apiInfo = {
     'Content-Type': 'application/json'
   }
 }
-
-

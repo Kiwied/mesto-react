@@ -11,20 +11,25 @@ import EditAvatarPopup from "./EditAvatarPopup";
 import { api } from "../utils/Api";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import AddPlacePopup from "./AddPlacePopup";
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter, useHistory } from 'react-router-dom';
 import ProtectedRoute from "./ProtectedRoute";
 import Register from "./Register";
 import InfoTooltip from "./InfoTooltip";
+import { HeaderContext, headers } from "../contexts/HeaderContext";
+import { auth } from "../utils/Auth";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
-  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(true);
+  const [isInfoTooltipOpen, setIsInfoTooltipOpen] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({});
   const [currentUser, setCurrentUser] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(false);
+  const [headerContext, setHeaderContext] = React.useState('login');
+
+  const history = useHistory();
 
   React.useEffect(() => {
     api.getUserInfo()
@@ -96,6 +101,23 @@ function App() {
       });
   }, [])
 
+  React.useEffect(() => {
+      tokenCheck();
+  }, [])
+
+  function tokenCheck() {
+    const jwt = localStorage.getItem('token');
+    if (jwt) {
+      auth.getContent(jwt)
+        .then(res => {
+          if (res) {
+            handleLogin();
+            history.push('/');
+          }
+        })
+    }
+  }
+
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     (isLiked ? api.dislike(card._id) : api.like(card._id))
@@ -134,19 +156,27 @@ function App() {
       });
   }
 
+  function handleLogin() {
+    setLoggedIn(true);
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <div className="content">
-          <Header/>
+          <HeaderContext.Provider value={headers[headerContext]}>
+            <Header/>
+          </HeaderContext.Provider>
 
           <Switch>
-            <Route path="/sign-up">
-              <Register/>
+            <Route path="/signup">
+              <Register onHeaderChange={setHeaderContext} />
             </Route>
 
-            <Route path="/sign-in">
-              <Login/>
+            <Route path="/signin">
+              <Login onHeaderChange={setHeaderContext}
+                     handleLogin={handleLogin}
+              />
             </Route>
 
             <ProtectedRoute exact path="/"
@@ -159,7 +189,8 @@ function App() {
                             cards={cards}
                             onCardLike={handleCardLike}
                             onCardDelete={handleCardDelete}
-            />
+            >
+            </ProtectedRoute>
           </Switch>
 
           <Footer/>
