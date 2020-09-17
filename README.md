@@ -1,4 +1,4 @@
-# Проект 4-11: Mesto
+# Проект 4-14: Mesto
 
 ### Обзор
 
@@ -23,10 +23,11 @@
 
 [Макет девятой части работы](https://www.figma.com/file/hhhIavVTeuilfPPZ6sbifl/JavaScript.-Sprint-9?node-id=0%3A1 "Figma/mesto")
 
+[Макет четырнадцатой части работы](https://www.figma.com/file/fUESH7icdnexdbpwgYsUcc/Sprint-14-RU?node-id=0%3A1 "Figma/mesto")
+
 #### Используемые технологии
 
-* HTML, CSS, JavaScript
-* React
+* HTML, CSS, JavaScript (React)
 * API запросы к серверу
 * Интерактивность и валидация при помощи JavaScript
 * Flexbox, Grid Layout
@@ -36,6 +37,7 @@
 
 **Принципиально новые технологии в сравнении с прошлыми работами:**
 
-* использование React
+* реализация авторизации в приложении
+* использование JWT токена для удобста пользователя
 
 **[Ссылка на GitHub Pages](https://kiwied.github.io/mesto-react/ "Mesto")**
