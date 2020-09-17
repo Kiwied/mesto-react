@@ -28,10 +28,6 @@ export default function Register(props) {
     props.onHeaderChange('login')
   }
 
-  const handleLoggedInRedirect = () => {
-    props.onHeaderChange('loggedIn');
-  }
-
   function handleEmailChange(evt) {
     setEmail(evt.target.value);
   }
@@ -45,10 +41,17 @@ export default function Register(props) {
     auth.register(password, email)
       .then(res => {
         if (res) {
+          setPassword('');
+          setEmail('');
+          props.onSigning('success')
           history.push('/signin');
         } else {
-          console.log('Что то пошло не так')
+          props.onSigning('fail')
+          console.log('Что то пошло не так');
         }
+      })
+      .finally(res => {
+        props.onSubmit();
       })
   }
 
@@ -78,7 +81,7 @@ export default function Register(props) {
           />
           <button type="submit"
                   className="auth-form__submit"
-                  onClick={handleLoggedInRedirect}
+                  onClick={handleLoginRedirect}
           >
             Зарегистрироваться
           </button>

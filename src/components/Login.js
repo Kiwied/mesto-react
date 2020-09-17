@@ -28,10 +28,6 @@ export default function Login(props) {
     props.onHeaderChange('register')
   }
 
-  const handleLoggedInRedirect = () => {
-    props.onHeaderChange('loggedIn');
-  }
-
   function handleEmailChange(evt) {
     setEmail(evt.target.value);
   }
@@ -51,8 +47,11 @@ export default function Login(props) {
           setPassword('');
           setEmail('');
           props.handleLogin();
-          history.push('/')
+          history.push('/');
         }
+      })
+      .catch(() => {
+        props.onError();
       })
   }
 
@@ -83,7 +82,7 @@ export default function Login(props) {
           <button type="submit"
                   className="auth-form__submit"
                   value="loggedIn"
-                  onClick={handleLoggedInRedirect}
+                  onClick={handleSubmit}
           >
             Войти
           </button>

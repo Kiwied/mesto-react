@@ -1,8 +1,9 @@
 import React from "react";
-import okPath from "../images/icon-ok.svg"
-import crossPath from "../images/icon-cross.svg";
+import { InfoTooltipContext } from "../contexts/infoTooltipContext";
 
 export default function InfoTooltip(props) {
+  const infoTooltipContext = React.useContext(InfoTooltipContext);
+
   React.useEffect(() => {
     function handleOverlayClose(evt) {
       if (evt.target.classList.contains('popup_opened')) {
@@ -27,18 +28,11 @@ export default function InfoTooltip(props) {
     >
       <div className="infoTooltip">
         <img className="infoTooltip__icon"
-             src={props.loggedIn
-               ? okPath
-               : crossPath
-             }
+             src={infoTooltipContext.imgPath}
              alt="Результат регистрации"
         />
         <p className="infoTooltip__caption">
-          {props.loggedIn
-            ? 'Вы успешно зарегистрировались!'
-            : 'Что-то пошло не так!\n' +
-            'Попробуйте ещё раз.'
-          }
+          {infoTooltipContext.text}
         </p>
         <button onClick={props.onClose}
                 type="button"

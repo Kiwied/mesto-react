@@ -4,12 +4,11 @@ export const HeaderContext = React.createContext();
 
 export const headers = {
   register: {
-    text: 'Войти'
+    text: 'Войти',
+    redirectPath: '/signin'
   },
   login: {
-    text: 'Регистрация'
-  },
-  loggedIn: {
-    text: 'email@mail.com Выйти'
+    text: 'Регистрация',
+    redirectPath: '/signup'
   }
 }

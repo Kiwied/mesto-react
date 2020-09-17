@@ -6,12 +6,16 @@ class Auth {
   register(pass, email) {
     return fetch(`${this._baseUrl}/signup`, {
       method: 'POST',
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ pass, email })
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        "password": pass,
+        "email": email
+      })
     })
       .then((res) => {
+        console.log(res);
         try {
-          if (res.status === 200){
+          if (res.status === 201){
             return res.json();
           }
         } catch(err){
@@ -27,7 +31,7 @@ class Auth {
   singIn(pass, email) {
     return fetch(`${this._baseUrl}/signin`, {
       method: 'POST',
-      headers: { "content-type": "application/json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         "password": pass,
         "email": email
@@ -49,7 +53,7 @@ class Auth {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'GET',
       headers: {
-        "Content-type": "application/json",
+        "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
       }
     })

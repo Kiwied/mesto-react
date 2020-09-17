@@ -16,6 +16,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Register from "./Register";
 import InfoTooltip from "./InfoTooltip";
 import { HeaderContext, headers } from "../contexts/HeaderContext";
+import { InfoTooltipContext, infoTooltipCaptions } from "../contexts/infoTooltipContext";
 import { auth } from "../utils/Auth";
 
 function App() {
@@ -28,6 +29,8 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [headerContext, setHeaderContext] = React.useState('login');
+  const [infoTooltipContext, setInfoTooltipContext] = React.useState('fail');
+  const [email, setEmail] = React.useState('');
 
   const history = useHistory();
 
@@ -40,6 +43,7 @@ function App() {
         console.log(`Ошибка: ${err}`);
       })
   }, [])
+
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -56,6 +60,10 @@ function App() {
   function handleCardClick(card) {
     setIsImagePopupOpen(true);
     setSelectedCard(card);
+  }
+
+  function handleInfoTooltipOpen() {
+    setIsInfoTooltipOpen(true);
   }
 
   function closeAllPopups() {
@@ -103,7 +111,7 @@ function App() {
 
   React.useEffect(() => {
       tokenCheck();
-  }, [])
+  }, [loggedIn])
 
   function tokenCheck() {
     const jwt = localStorage.getItem('token');
@@ -112,6 +120,7 @@ function App() {
         .then(res => {
           if (res) {
             handleLogin();
+            setEmail(res.data.email);
             history.push('/');
           }
         })
@@ -160,22 +169,35 @@ function App() {
     setLoggedIn(true);
   }
 
+  function handleLogout() {
+    setLoggedIn(false);
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
         <div className="content">
           <HeaderContext.Provider value={headers[headerContext]}>
-            <Header/>
+            <Header loggedIn={loggedIn}
+                    email={email}
+                    onSignOut={handleLogout}
+                    onHeaderChange={setHeaderContext}
+            />
           </HeaderContext.Provider>
 
           <Switch>
             <Route path="/signup">
-              <Register onHeaderChange={setHeaderContext} />
+              <Register onHeaderChange={setHeaderContext}
+                        onSubmit={handleInfoTooltipOpen}
+                        onSigning={setInfoTooltipContext}
+              />
             </Route>
 
             <Route path="/signin">
               <Login onHeaderChange={setHeaderContext}
                      handleLogin={handleLogin}
+                     onLogout={handleLogout}
+                     onError={handleInfoTooltipOpen}
               />
             </Route>
 
@@ -193,14 +215,16 @@ function App() {
             </ProtectedRoute>
           </Switch>
 
-          <Footer/>
+          {loggedIn && <Footer/>}
 
-          <InfoTooltip
-            isOpen={isInfoTooltipOpen}
-            onClose={closeAllPopups}
-            loggedIn={loggedIn}
-            name="infoTooltip"
-          />
+          <InfoTooltipContext.Provider value={infoTooltipCaptions[infoTooltipContext]}>
+            <InfoTooltip
+              isOpen={isInfoTooltipOpen}
+              onClose={closeAllPopups}
+              loggedIn={loggedIn}
+              name="infoTooltip"
+            />
+          </InfoTooltipContext.Provider>
 
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
