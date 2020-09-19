@@ -1,12 +1,11 @@
 import logoPath from "../images/logo.svg";
 import React from "react";
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { HeaderContext } from "../contexts/HeaderContext";
 
 export default function Header(props) {
   const headerContext = React.useContext(HeaderContext);
   const [opacity, setOpacity] = React.useState(1);
-  const history = useHistory();
 
   const linkStyle = {
     color: 'white',
