@@ -1,12 +1,9 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
-import { auth } from "../utils/Auth";
+import { Link } from "react-router-dom";
 
 export default function Login(props) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-
-  const history = useHistory();
 
   function handleRegisterRedirect() {
     props.onHeaderChange('register')
@@ -25,18 +22,9 @@ export default function Login(props) {
     if (!password || !email) {
       return;
     }
-    auth.singIn(password, email)
-      .then(data => {
-        if (data.token) {
-          setPassword('');
-          setEmail('');
-          props.handleLogin();
-          history.push('/');
-        }
-      })
-      .catch(() => {
-        props.onError();
-      })
+    props.onSubmit(password, email);
+    setEmail('');
+    setPassword('');
   }
 
   return (

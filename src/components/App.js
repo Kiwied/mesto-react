@@ -179,6 +179,34 @@ function App() {
     history.push('/signin');
   }
 
+  function handleLoginFormSubmit(password, email) {
+    auth.singIn(password, email)
+      .then(data => {
+        if (data.token) {
+          handleLogin();
+          history.push('/');
+        }
+      })
+      .catch(() => {
+        handleInfoTooltipOpen();
+      })
+  }
+
+  function handleRegisterFormSubmit(password, email) {
+    auth.register(password, email)
+      .then(res => {
+        if (res) {
+          setInfoTooltipContext('success');
+          history.push('/signin');
+        } else {
+          setInfoTooltipContext('fail');
+        }
+      })
+      .finally(() => {
+        handleInfoTooltipOpen();
+      })
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -194,17 +222,13 @@ function App() {
           <Switch>
             <Route path="/signup">
               <Register onHeaderChange={setHeaderContext}
-                        onSubmit={handleInfoTooltipOpen}
-                        onSigning={setInfoTooltipContext}
+                        onSubmit={handleRegisterFormSubmit}
               />
             </Route>
 
-
             <Route path="/signin">
               <Login onHeaderChange={setHeaderContext}
-                   handleLogin={handleLogin}
-                   onLogout={handleLogout}
-                   onError={handleInfoTooltipOpen}
+                     onSubmit={handleLoginFormSubmit}
               />
             </Route>
 
