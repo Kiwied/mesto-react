@@ -4,18 +4,19 @@ import React from "react";
 export default function EditAvatarPopup(props) {
   const urlRef = React.useRef();
 
+  React.useEffect(() => {
+    urlRef.current.value = '';
+  }, [props.isOpen])
+
   function handleSubmit(evt) {
     evt.preventDefault();
-
     props.onAvatarUpdate({
       avatar: urlRef.current.value,
     })
-    urlRef.current.value = '';
   }
 
   function handleClose() {
     props.onClose();
-    urlRef.current.value = '';
   }
 
   return (
