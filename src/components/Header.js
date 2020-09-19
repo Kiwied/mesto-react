@@ -5,23 +5,6 @@ import { HeaderContext } from "../contexts/HeaderContext";
 
 export default function Header(props) {
   const headerContext = React.useContext(HeaderContext);
-  const [opacity, setOpacity] = React.useState(1);
-
-  const linkStyle = {
-    color: 'white',
-    textDecoration: 'none',
-    transition: 'opacity .15s linear',
-    opacity: opacity,
-    marginLeft: 24
-  }
-
-  function handleMouseEnter() {
-    setOpacity(0.6);
-  }
-
-  function handleMouseLeave() {
-    setOpacity(1);
-  }
 
   function handleLinkClick() {
     if (headerContext.text === 'Войти') {
@@ -43,12 +26,10 @@ export default function Header(props) {
           <div className="header__container">
             <p className="header__auth">
               { props.loggedIn
-                ? (`${props.email} `)
+                ? (`${props.email}  `)
                 : (
                   <Link to={headerContext.redirectPath}
-                        style={linkStyle}
-                        onMouseEnter={handleMouseEnter}
-                        onMouseLeave={handleMouseLeave}
+                        className="link"
                         onClick={handleLinkClick}
                   >
                     {headerContext.text}
@@ -57,10 +38,8 @@ export default function Header(props) {
               }
             </p>
             {props.loggedIn && <Link to=""
-                                  style={linkStyle}
-                                  onMouseEnter={handleMouseEnter}
-                                  onMouseLeave={handleMouseLeave}
-                                  onClick={props.onSignOut}
+                                     className="link link_header"
+                                     onClick={props.onSignOut}
             >
               Выйти
             </Link>}

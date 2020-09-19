@@ -3,26 +3,10 @@ import { Link, useHistory } from "react-router-dom";
 import { auth } from "../utils/Auth";
 
 export default function Login(props) {
-  const [opacity, setOpacity] = React.useState(1);
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   const history = useHistory();
-
-  const linkStyle = {
-    color: 'white',
-    textDecoration: 'none',
-    transition: 'opacity .15s linear',
-    opacity: opacity
-  }
-
-  function handleMouseEnter() {
-    setOpacity(0.6);
-  }
-
-  function handleMouseLeave() {
-    setOpacity(1);
-  }
 
   function handleRegisterRedirect() {
     props.onHeaderChange('register')
@@ -90,9 +74,7 @@ export default function Login(props) {
 
         <p className="auth__redirect">
           Ещё не зарегистрированы? {<Link to="/signup"
-                                          style={linkStyle}
-                                          onMouseEnter={handleMouseEnter}
-                                          onMouseLeave={handleMouseLeave}
+                                          className="link"
                                           onClick={handleRegisterRedirect}
         >
           Регистриация

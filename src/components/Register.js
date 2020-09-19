@@ -3,26 +3,9 @@ import { Link, useHistory } from "react-router-dom";
 import { auth } from "../utils/Auth";
 
 export default function Register(props) {
-  const [opacity, setOpacity] = React.useState(1);
   const [password, setPassword] = React.useState('');
   const [email, setEmail] = React.useState('');
-
   const history = useHistory();
-
-  const linkStyle = {
-    color: 'white',
-    textDecoration: 'none',
-    transition: 'opacity .15s linear',
-    opacity: opacity
-  }
-
-  function handleMouseEnter() {
-    setOpacity(0.6);
-  }
-
-  function handleMouseLeave() {
-    setOpacity(1);
-  }
 
   function handleLoginRedirect() {
     props.onHeaderChange('login')
@@ -50,7 +33,7 @@ export default function Register(props) {
           console.log('Что то пошло не так');
         }
       })
-      .finally(res => {
+      .finally(() => {
         props.onSubmit();
       })
   }
@@ -89,9 +72,7 @@ export default function Register(props) {
 
         <p className="auth__redirect">
           Уже зарегистрированы? {<Link to="/signin"
-                                       style={linkStyle}
-                                       onMouseEnter={handleMouseEnter}
-                                       onMouseLeave={handleMouseLeave}
+                                       className="link"
                                        onClick={handleLoginRedirect}
         >
           Войти
