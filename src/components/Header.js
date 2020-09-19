@@ -24,12 +24,6 @@ export default function Header(props) {
     setOpacity(1);
   }
 
-  function handleSignOut() {
-    props.onSignOut();
-    localStorage.removeItem('token');
-    history.push('/signin');
-  }
-
   function handleLinkClick() {
     if (headerContext.text === 'Войти') {
       props.onHeaderChange('login')
@@ -67,7 +61,7 @@ export default function Header(props) {
                                   style={linkStyle}
                                   onMouseEnter={handleMouseEnter}
                                   onMouseLeave={handleMouseLeave}
-                                  onClick={handleSignOut}
+                                  onClick={props.onSignOut}
             >
               Выйти
             </Link>}

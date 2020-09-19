@@ -173,6 +173,12 @@ function App() {
     setLoggedIn(false);
   }
 
+  function handleBtnSignOut() {
+    handleLogout();
+    localStorage.removeItem('token');
+    history.push('/signin');
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -180,7 +186,7 @@ function App() {
           <HeaderContext.Provider value={headers[headerContext]}>
             <Header loggedIn={loggedIn}
                     email={email}
-                    onSignOut={handleLogout}
+                    onSignOut={handleBtnSignOut}
                     onHeaderChange={setHeaderContext}
             />
           </HeaderContext.Provider>
