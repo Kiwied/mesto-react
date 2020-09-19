@@ -4,7 +4,6 @@ import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import Login from "./Login";
-import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
@@ -127,23 +126,25 @@ function App() {
   }, [])
 
   React.useEffect(() => {
-      tokenCheck();
-  }, [loggedIn])
-
-  function tokenCheck() {
-    const jwt = localStorage.getItem('token');
-    if (jwt) {
-      auth.getContent(jwt)
-        .then(res => {
-          if (res) {
-            handleLogin();
-            setEmail(res.data.email);
-            history.push('/');
-          }
-        })
-        .catch(err => console.log(err))
+    function tokenCheck() {
+      const jwt = localStorage.getItem('token');
+      if (jwt) {
+        auth.getContent(jwt)
+          .then(res => {
+            if (res) {
+              handleLogin();
+              setEmail(res.data.email);
+              history.push('/');
+            }
+          })
+          .catch(err => console.log(err))
+      }
     }
-  }
+
+      tokenCheck();
+  }, [loggedIn, history])
+
+
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
