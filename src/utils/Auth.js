@@ -25,7 +25,6 @@ class Auth {
       .then(res => {
         return res;
       })
-      .catch(err => console.log(err))
   }
 
   singIn(pass, email) {
@@ -46,7 +45,6 @@ class Auth {
           return;
         }
       })
-      .catch(err => console.log(err))
   }
 
   getContent(token) {
@@ -58,7 +56,6 @@ class Auth {
       }
     })
       .then(res => res.json())
-      .catch(err => console.log(err))
   }
 }
 

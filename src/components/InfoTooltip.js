@@ -5,21 +5,7 @@ export default function InfoTooltip(props) {
   const infoTooltipContext = React.useContext(InfoTooltipContext);
 
   React.useEffect(() => {
-    function handleOverlayClose(evt) {
-      if (evt.target.classList.contains('popup_opened')) {
-        props.onClose(evt);
-      }
-    }
-
-    document
-      .getElementById(`popup__${props.name}`)
-      .addEventListener('click', handleOverlayClose)
-
-    return() => {
-      document
-        .getElementById(`popup__${props.name}`)
-        .removeEventListener('click', handleOverlayClose)
-    }
+    props.overlayCloseEffect('infoTooltip');
   }, [])
 
   return (

@@ -36,6 +36,7 @@ export default function EditProfilePopup(props) {
       isOpen={props.isOpen}
       onClose={props.onClose}
       onSubmit={handleSubmit}
+      overlayCloseEffect={props.overlayCloseEffect}
       name="profile"
       title="Редактировать профиль"
       button="Сохранить"

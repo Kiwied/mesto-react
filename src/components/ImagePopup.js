@@ -2,21 +2,7 @@ import React from "react";
 
 export default function ImagePopup(props) {
   React.useEffect(() => {
-    function handleOverlayClose(evt) {
-      if (evt.target.classList.contains('popup_opened')) {
-        props.onClose(evt);
-      }
-    }
-
-    document
-      .getElementById('popup__enlarged')
-      .addEventListener('click', handleOverlayClose)
-
-    return() => {
-      document
-        .getElementById('popup__enlarged')
-        .removeEventListener('click', handleOverlayClose)
-    }
+    props.overlayCloseEffect('enlarged')
   }, [])
 
   return (

@@ -36,6 +36,7 @@ export default function AddPlacePopup(props) {
       isOpen={props.isOpen}
       onClose={handleClose}
       onSubmit={handleSubmit}
+      overlayCloseEffect={props.overlayCloseEffect}
       name="new-card"
       title="Новое место"
       button="Создать"

@@ -44,6 +44,23 @@ function App() {
       })
   }, [])
 
+  function overlayCloseEffect(popupName) {
+    function handleOverlayClose(evt) {
+      if (evt.target.classList.contains('popup_opened')) {
+        closeAllPopups();
+      }
+    }
+
+    document
+      .getElementById(`popup__${popupName}`)
+      .addEventListener('click', handleOverlayClose)
+
+    return() => {
+      document
+        .getElementById(`popup__${popupName}`)
+        .removeEventListener('click', handleOverlayClose)
+    }
+  }
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -124,6 +141,7 @@ function App() {
             history.push('/');
           }
         })
+        .catch(err => console.log(err))
     }
   }
 
@@ -188,6 +206,7 @@ function App() {
         }
       })
       .catch(() => {
+        setInfoTooltipContext('fail');
         handleInfoTooltipOpen();
       })
   }
@@ -202,6 +221,7 @@ function App() {
           setInfoTooltipContext('fail');
         }
       })
+      .catch(err => console.log(err))
       .finally(() => {
         handleInfoTooltipOpen();
       })
@@ -252,7 +272,7 @@ function App() {
               isOpen={isInfoTooltipOpen}
               onClose={closeAllPopups}
               loggedIn={loggedIn}
-              name="infoTooltip"
+              overlayCloseEffect={overlayCloseEffect}
             />
           </InfoTooltipContext.Provider>
 
@@ -260,30 +280,28 @@ function App() {
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
+            overlayCloseEffect={overlayCloseEffect}
           />
 
           <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
             onAddPlace={handleAddPlaceSubmit}
+            overlayCloseEffect={overlayCloseEffect}
           />
 
           <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
             onAvatarUpdate={handleUpdateAvatar}
-          />
-
-          <PopupWithForm
-            name="delete"
-            title="Вы уверены?"
-            button="Да"
+            overlayCloseEffect={overlayCloseEffect}
           />
 
           <ImagePopup
             isOpen={isImagePopupOpen}
             onClose={closeAllPopups}
             card={selectedCard}
+            overlayCloseEffect={overlayCloseEffect}
           />
         </div>
       </div>
