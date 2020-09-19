@@ -193,15 +193,16 @@ function App() {
               />
             </Route>
 
+
             <Route path="/signin">
               <Login onHeaderChange={setHeaderContext}
-                     handleLogin={handleLogin}
-                     onLogout={handleLogout}
-                     onError={handleInfoTooltipOpen}
+                   handleLogin={handleLogin}
+                   onLogout={handleLogout}
+                   onError={handleInfoTooltipOpen}
               />
             </Route>
 
-            <ProtectedRoute exact path="/"
+            <ProtectedRoute path="/"
                             loggedIn={loggedIn}
                             component={Main}
                             onEditProfile={handleEditProfileClick}
@@ -211,8 +212,7 @@ function App() {
                             cards={cards}
                             onCardLike={handleCardLike}
                             onCardDelete={handleCardDelete}
-            >
-            </ProtectedRoute>
+            />
           </Switch>
 
           {loggedIn && <Footer/>}
