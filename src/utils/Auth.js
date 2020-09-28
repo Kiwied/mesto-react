@@ -1,6 +1,6 @@
 class Auth {
   constructor() {
-    this._baseUrl = 'https://auth.nomoreparties.co'
+    this._baseUrl = 'https://www.kiwiedmesto.students.nomoreparties.co/api'
   }
 
   register(pass, email) {
