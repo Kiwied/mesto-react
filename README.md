@@ -40,4 +40,10 @@
 * реализация авторизации в приложении
 * использование JWT токена для удобста пользователя
 
-**[Ссылка на GitHub Pages](https://kiwied.github.io/mesto-react/ "Mesto")**
+**[Ссылка на GitHub Pages (используется старый общий API)](https://kiwied.github.io/mesto-react/ "Mesto")**
+**[Ссылка на Yandex.Cloud (используется свой API)](https://www.kiwied.students.nomoreparties.xyz/ "Mesto")**
+
+#### Планы на доработку
+
+* поправить баг 'Cannot read property 'some' of undefined' при добавлении/лайке карточки
+* доделать верстку под мобильное разрешение
