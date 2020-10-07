@@ -9,10 +9,6 @@ export default function Main(props) {
     props.getCardsAfterLogin();
   }, [])
 
-  React.useEffect(() => {
-    props.getUserInfoAfterLogin();
-  }, [])
-
   return (
     <main>
       <section className="profile">

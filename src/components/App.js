@@ -37,13 +37,12 @@ function App() {
   React.useEffect(() => {
     function tokenCheck() {
       const jwt = localStorage.getItem('token');
-      console.log(jwt);
       if (jwt) {
         auth.getContent(jwt)
           .then(res => {
             if (res) {
-              console.log(res);
               setEmail(res.email);
+              setCurrentUser(res);
               history.push('/');
               handleLogin();
             }
@@ -63,16 +62,6 @@ function App() {
       .catch(err => {
         console.log(`Ошибка: ${err}`)
       });
-  }
-
-  function getUserInfoAfterLogin() {
-    api.getUserInfo()
-      .then(res => {
-        setCurrentUser(res);
-      })
-      .catch(err => {
-        console.log(`Ошибка: ${err}`);
-      })
   }
 
   function overlayCloseEffect(popupName) {
@@ -146,7 +135,7 @@ function App() {
   }
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const isLiked = card.likes.some(i => i === currentUser._id);
     (isLiked ? api.dislike(card._id) : api.like(card._id))
       .then((likedCard) => {
         const newCards = cards.map((currentCard) =>
@@ -263,8 +252,6 @@ function App() {
                             onCardLike={handleCardLike}
                             onCardDelete={handleCardDelete}
                             getCardsAfterLogin={getCardsAfterLogin}
-                            getUserInfoAfterLogin={getUserInfoAfterLogin}
-
             />
           </Switch>
 
