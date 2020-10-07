@@ -1,6 +1,9 @@
+const jwt = localStorage.getItem('token');
+
 export const apiInfo = {
-  baseUrl: 'https://www.kiwiedmesto.students.nomoreparties.co/api',
+  baseUrl: 'https://www.api.kiwied.students.nomoreparties.xyz',
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${jwt}`
   }
 }

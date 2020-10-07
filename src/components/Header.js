@@ -13,7 +13,6 @@ export default function Header(props) {
     if (headerContext.text === 'Регистрация') {
       props.onHeaderChange('register')
     }
-    console.log(headerContext);
   }
 
   return (

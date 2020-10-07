@@ -1,5 +1,4 @@
 {
-  "homepage": "./",
   "name": "mesto-react",
   "version": "0.1.0",
   "private": true,
@@ -18,7 +17,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "npm run build && scp -r ./build/* kiwied@130.193.50.115:/home/kiwied/react-mesto",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

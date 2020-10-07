@@ -30,10 +30,42 @@ function App() {
   const [headerContext, setHeaderContext] = React.useState('login');
   const [infoTooltipContext, setInfoTooltipContext] = React.useState('fail');
   const [email, setEmail] = React.useState('');
+  const [cards, setCards] = React.useState([]);
 
   const history = useHistory();
 
   React.useEffect(() => {
+    function tokenCheck() {
+      const jwt = localStorage.getItem('token');
+      console.log(jwt);
+      if (jwt) {
+        auth.getContent(jwt)
+          .then(res => {
+            if (res) {
+              console.log(res);
+              setEmail(res.email);
+              history.push('/');
+              handleLogin();
+            }
+          })
+          .catch(err => console.log(err))
+      }
+    }
+
+    tokenCheck();
+  }, [loggedIn, history])
+
+  function getCardsAfterLogin() {
+    api.getInitialCards()
+      .then(res => {
+        setCards(res);
+      })
+      .catch(err => {
+        console.log(`Ошибка: ${err}`)
+      });
+  }
+
+  function getUserInfoAfterLogin() {
     api.getUserInfo()
       .then(res => {
         setCurrentUser(res);
@@ -41,7 +73,7 @@ function App() {
       .catch(err => {
         console.log(`Ошибка: ${err}`);
       })
-  }, [])
+  }
 
   function overlayCloseEffect(popupName) {
     function handleOverlayClose(evt) {
@@ -94,7 +126,7 @@ function App() {
   function handleUpdateUser(newUserInfo) {
     api.setNewUserInfo(newUserInfo)
       .then((data) => {
-        setCurrentUser(data);
+        setCurrentUser(data.data);
         closeAllPopups();
       })
       .catch(err => {
@@ -105,46 +137,13 @@ function App() {
   function handleUpdateAvatar({avatar}) {
     api.setNewAvatar({avatar})
       .then((data) => {
-        setCurrentUser(data);
+        setCurrentUser(data.data);
         closeAllPopups();
       })
       .catch(err => {
         console.log(`Ошибка: ${err}`)
       });
   }
-
-  const [cards, setCards] = React.useState([]);
-
-  React.useEffect(() => {
-    api.getInitialCards()
-      .then(res => {
-        setCards(res);
-      })
-      .catch(err => {
-        console.log(`Ошибка: ${err}`)
-      });
-  }, [])
-
-  React.useEffect(() => {
-    function tokenCheck() {
-      const jwt = localStorage.getItem('token');
-      if (jwt) {
-        auth.getContent(jwt)
-          .then(res => {
-            if (res) {
-              handleLogin();
-              setEmail(res.data.email);
-              history.push('/');
-            }
-          })
-          .catch(err => console.log(err))
-      }
-    }
-
-      tokenCheck();
-  }, [loggedIn, history])
-
-
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -263,6 +262,9 @@ function App() {
                             cards={cards}
                             onCardLike={handleCardLike}
                             onCardDelete={handleCardDelete}
+                            getCardsAfterLogin={getCardsAfterLogin}
+                            getUserInfoAfterLogin={getUserInfoAfterLogin}
+
             />
           </Switch>
 
