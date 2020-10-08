@@ -139,7 +139,7 @@ function App() {
     (isLiked ? api.dislike(card._id) : api.like(card._id))
       .then((likedCard) => {
         const newCards = cards.map((currentCard) =>
-          currentCard._id === card._id ? likedCard : currentCard
+          currentCard._id === card._id ? likedCard.data : currentCard
         );
         setCards(newCards);
       })
@@ -164,7 +164,7 @@ function App() {
   function handleAddPlaceSubmit(newCardInfo) {
     api.addNewCard(newCardInfo)
       .then((newCard) => {
-        setCards([newCard, ...cards]);
+        setCards([...cards, newCard.card]);
         closeAllPopups();
       })
       .catch(err => {

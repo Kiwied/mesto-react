@@ -43,7 +43,7 @@ export default function Main(props) {
 
       <section>
         <ul className="elements">
-          {props.cards.map(currentCard => (
+          {[...props.cards].reverse().map(currentCard => (
             <Card
               card={currentCard}
               key={currentCard._id}
